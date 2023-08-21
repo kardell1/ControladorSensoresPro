@@ -13,7 +13,8 @@ export const conectSocket=()=>{
  */
 export const desconectSocket=()=>{
     if(socket){
-        socket.disconnect();
+        // socket.disconnect();
+        socket.close();
         socket = null;
     }
     return socket;

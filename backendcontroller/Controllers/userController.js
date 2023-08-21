@@ -1,8 +1,6 @@
 import express from "express";
-// import sequelize from "../sequelizeConfig";
 import { User } from "../Models/UserModel.js";
 import { Op } from "sequelize";
-// import { Op } from "sequelize";
 export const userController = express.Router();
 /**aca manejamos la logica del programa cuando accedan a la ruta userData , convertimos la funcion flecha en una asincrona  */
 userController.post("/userData", async (req, res) => {
@@ -26,13 +24,27 @@ userController.post("/userData", async (req, res) => {
 });
 /**NOTA.- para crear un usuario debemos traer el modelo del usuario y hacer la query para crearlo */
 userController.post("/createUser", async (req, res) => {
+  const { name, pass } = req.body;
+  /**en caso de no encontrar registro el UsuarioEncontrado = null */
+  const UsuarioEncontrado = await User.findOne({
+    where: {
+      [Op.and]: [{ username: name }, { password: pass }],
+    },
+  });
   try {
-    const newUser = await User.create({
-      username: req.body.name,
-      password: req.body.pass,
-    });
-    console.log("usuario creado :" + newUser);
-    res.json({ messaje: "usuario creado correctamente", user: newUser });
+    if (UsuarioEncontrado!=null){
+      //si existe el usuario
+      console.log("usuario ya existe en la base de datos");
+      res.json({ messaje: "ya existe el usuario"});
+    }else{
+      //sino existe se crea el usuario
+      const newUser = await User.create({
+        username: req.body.name,
+        password: req.body.pass,
+      });
+      console.log("usuario creado :" + newUser);
+      res.json({ messaje: "usuario creado correctamente", user: newUser });
+    }
   } catch (err) {
     console.log("no se pudo crear el usuario" + err);
     res.json({ messaje: "no se creo el usuario" });
