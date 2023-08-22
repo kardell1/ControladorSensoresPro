@@ -37,6 +37,7 @@ userController.post("/createUser", async (req, res) => {
       console.log("usuario ya existe en la base de datos");
       res.json({ messaje: "ya existe el usuario"});
     }else{
+      
       //sino existe se crea el usuario
       const newUser = await User.create({
         username: req.body.name,

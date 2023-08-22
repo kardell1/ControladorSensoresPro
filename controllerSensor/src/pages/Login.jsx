@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDataContext } from "../context/ContextUser";
+import { conectSocket } from "../components/CompConexionSocket";
 
 function Login() {
   //para usar el contexto primero debemos declararlo y asi podremos acceder a sus funciones
@@ -29,6 +30,7 @@ function Login() {
             
           UpdateValue(data);
           console.log("datos desde el contexto : " + data.status)
+          conectSocket();
           navegate('/ControllerPage');
         }else{
           console.log("datos de logueo erroneos");

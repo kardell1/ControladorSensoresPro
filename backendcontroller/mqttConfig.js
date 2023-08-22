@@ -7,7 +7,7 @@ const brokerMqttOptions = {
 export let client;
 
 try{
-    client = mqtt.connect("mqtt://192.168.0.197:1883");
+    client = mqtt.connect("mqtt://192.168.0.10:1883");
     client.on('connect' , ()=>{
         console.log("conexion con mqtt establecida");
     })

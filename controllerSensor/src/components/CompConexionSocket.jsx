@@ -4,7 +4,12 @@ let socket;
 
 //con esta funcion conectamos al socket del backend y escucharemos los mensajes que nos envian 
 export const conectSocket=()=>{
+    console.log("funcion conexion socket ejecutandose");
     socket = io("http://localhost:4000");
+    if (!socket) {
+        throw new Error("La conexión de socket no pudo establecerse correctamente.");
+    }
+    
     return socket
 }
 /**tambien es necesario una funcion de desconexion del socket
@@ -13,6 +18,7 @@ export const conectSocket=()=>{
  */
 export const desconectSocket=()=>{
     if(socket){
+        console.log("funcion de desconexion ejecutandose ")
         // socket.disconnect();
         socket.close();
         socket = null;

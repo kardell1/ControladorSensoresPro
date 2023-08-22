@@ -59,10 +59,10 @@ function MenuUser() {
               <p className="px-2" >VENTILADOR</p>
             </div>
             <div className="hidden group-hover:block py-2 hover:text-blue-700 ">
-              <ButtonControllConfig name="Encender" value="on1" />
+              <ButtonControllConfig name="Encender" value="on2" />
             </div>
             <div className="hidden group-hover:block py-2 hover:text-blue-700">
-              <ButtonControllConfig name="Apagar" value="off1" />
+              <ButtonControllConfig name="Apagar" value="off2" />
             </div>
           </div>          
         </div>
