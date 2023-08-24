@@ -1,11 +1,10 @@
-import sequelize from "../sequelizeConfig.js";
+import sequelize from "../Services/sequelizeConfig.js";
 import { DataTypes } from "sequelize";
 import { Sensor } from "./SensorModel.js";
 export const DataPoints = sequelize.define('data_points' , {
     
     data : {
-        type: DataTypes.INTEGER,
-        length : 20
+        type: DataTypes.INTEGER
     },
     sensorId: {
         type: DataTypes.INTEGER,

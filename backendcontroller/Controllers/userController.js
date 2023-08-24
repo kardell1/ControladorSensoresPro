@@ -2,6 +2,7 @@ import express from "express";
 import { User } from "../Models/UserModel.js";
 import { Op } from "sequelize";
 export const userController = express.Router();
+import { CreateTokken  } from "../Services/jwt.js";
 /**aca manejamos la logica del programa cuando accedan a la ruta userData , convertimos la funcion flecha en una asincrona  */
 userController.post("/userData", async (req, res) => {
   //desestructurar la informacion recibida en variables
@@ -13,13 +14,26 @@ userController.post("/userData", async (req, res) => {
     },
   });
   /**el Op = where nos sirve para las consultas y el and es para realizar una doble comparacion */
-  if (UsuarioEncontrado!=null){
+  if (UsuarioEncontrado != null) {
     /**el valor que se guarda dentro de
-     * UsuarioEncontrado son todos los datos del usuario 
+     * UsuarioEncontrado son todos los datos del usuario
      */
-    res.json({usuario: UsuarioEncontrado , status :"1"})
-  }else{
-    res.json({usuario: " no se ha encontrado"})
+    try {
+      /**se usa el try para ver algun posible error al momento de devolver los datos */
+      const tokken = await CreateTokken({ datos :UsuarioEncontrado });
+      console.log("Token obtenido:", tokken);
+    
+      res.json({
+        usuario: UsuarioEncontrado,
+        status: "1",
+        key: tokken,
+      });
+    } catch (error) {
+      console.error("Error al obtener el token:", error);
+    }
+
+  } else {
+    res.json({ usuario: " no se ha encontrado" });
   }
 });
 /**NOTA.- para crear un usuario debemos traer el modelo del usuario y hacer la query para crearlo */
@@ -32,19 +46,22 @@ userController.post("/createUser", async (req, res) => {
     },
   });
   try {
-    if (UsuarioEncontrado!=null){
+    if (UsuarioEncontrado != null) {
       //si existe el usuario
       console.log("usuario ya existe en la base de datos");
-      res.json({ messaje: "ya existe el usuario"});
-    }else{
-      
+      res.json({ messaje: "ya existe el usuario" });
+    } else {
       //sino existe se crea el usuario
       const newUser = await User.create({
         username: req.body.name,
         password: req.body.pass,
       });
       console.log("usuario creado :" + newUser);
-      res.json({ messaje: "usuario creado correctamente", user: newUser });
+      res.json({
+        messaje: "usuario creado correctamente",
+        user: newUser,
+        status: "1",
+      });
     }
   } catch (err) {
     console.log("no se pudo crear el usuario" + err);

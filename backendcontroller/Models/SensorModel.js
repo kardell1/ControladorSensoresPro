@@ -1,4 +1,4 @@
-import sequelize from "../sequelizeConfig.js";
+import sequelize from "../Services/sequelizeConfig.js";
 import { DataTypes } from "sequelize";
 import { CreateSensors } from "./SensorSeed.js";
 export const Sensor = sequelize.define('sensors' , {
@@ -8,11 +8,10 @@ export const Sensor = sequelize.define('sensors' , {
         autoIncrement:true
     },
     name_sensor : {
-        type: DataTypes.STRING , 
-        length : 20
+        type: DataTypes.STRING(20) 
     },
     description : {
-        type : DataTypes.STRING
+        type : DataTypes.STRING(100)
     }
 })
 //  // Función para eliminar todos los registros de la tabla

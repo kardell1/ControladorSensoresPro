@@ -1,8 +1,13 @@
+
+// import { Key } from "../context/ContextCookies";
 import SensorHumedad from "./CompSensorHumedad";
 import SensorHumedadSuelo from "./CompSensorHumedadSuelo";
 import SensorTemp from "./CompSensorTemp";
 
 function DashboardUser() {
+  // const valueCookie =Key();
+  // console.log( "desde componente dashboard las cookies son  :" + JSON.stringify(valueCookie));
+  
   return (
     <>
       <div className="h-screen relative shadow-md shadow-slate-400 ">

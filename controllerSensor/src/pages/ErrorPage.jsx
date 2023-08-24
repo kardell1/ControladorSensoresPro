@@ -5,6 +5,7 @@ function ErrorPage(){
         <div>
             <ChartWithMutableData/>
             <h1>componente error</h1>
+          
         </div>
         
         

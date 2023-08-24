@@ -6,14 +6,15 @@
 import express from "express";
 import http from "http";
 import cors from "cors";
-import {ServerPort} from "./Conexion.js";
+import {ServerPort} from "./Config/Conexion.js";
 import {router} from "./authRoutes.js";
-import sequelize from "./sequelizeConfig.js";
+import sequelize from "./Services/sequelizeConfig.js";
 import { User } from "./Models/UserModel.js";
 import { Sensor } from "./Models/SensorModel.js";
-import { client } from "./mqttConfig.js";
+import { client } from "./Services/mqttConfig.js";
 import {Server as SocketServer} from "socket.io";
 import { DataPoints } from "./Models/DataPoints.js";
+import { authenticateMiddleware } from "./Middleware/authMiddleware.js";
 const app = express();
 //cors debe declararse desde el inicio y la libreria se instala
  app.use(cors({
@@ -41,7 +42,7 @@ const io = new SocketServer(serve , {
       /**si ya tenemos la tabla en la base de datos seguira ejecutando el console.log
        * no se realizara ningun cambio en la base de datos si ya existe la tabla que queremos crear
        */
-      await User.sync();
+      await User.sync({alter:true});
       console.log("modelo User sincronizado con la base de datos");
     }catch(syncError){
       console.log("error al sincronizar el model User");
@@ -49,7 +50,7 @@ const io = new SocketServer(serve , {
     //_---------------------------------------------
     
     try{
-      await Sensor.sync();
+      await Sensor.sync({alter:true});
       console.log("modelo Sensor sincronizado con la base de datos");
       
     }catch(syncError){
@@ -151,6 +152,8 @@ async function MensajeMqtt(topic , message){
 //dentro va una funcion que recibira un mensaje 
 client.on('message' , MensajeMqtt);
 //-----------------------------------------------------
+/**primero declaramos el middleware para que registre todoso los tipos de entrada */
+app.use(authenticateMiddleware);
 app.use(router);
 /**el app.use(router) explicacion: router contiene las rutas que vamos a usar en l proyecto , entonces definimos ahi la logica de cada ruta que tengamos () */
 //------------------------------------------------------

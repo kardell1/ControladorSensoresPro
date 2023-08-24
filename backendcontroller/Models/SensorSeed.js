@@ -1,5 +1,5 @@
 import { Sensor } from "./SensorModel.js";
-import sequelize from "../sequelizeConfig.js";
+import sequelize from "../Services/sequelizeConfig.js";
 import { Op } from "sequelize";
 export async function CreateSensors(){
     try {

@@ -17,7 +17,9 @@ function CreateUser() {
       .then((response) => response.json())
       .then((data) => {
         if(data.status === "1"){  
-          console.log("datos desde el contexto : " + data.status)
+          console.log("datos de respuesta status : " + data.status)
+          console.log("datos de respuesta messaje :"  + data.messaje );
+          console.log("datos de respuesta user :"  + data.user );
           navegate('/');
         }else{
           console.log("datos de logueo erroneos");

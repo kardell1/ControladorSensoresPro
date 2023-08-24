@@ -2,14 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDataContext } from "../context/ContextUser";
 import { conectSocket } from "../components/CompConexionSocket";
-
+import { FillCookies } from "../context/ContextCookies";
 function Login() {
   //para usar el contexto primero debemos declararlo y asi podremos acceder a sus funciones
   const { UpdateValue } = useDataContext();
   const navegate = useNavigate();
   const [data, setData] = useState({
     name: "",
-    pass: ""
+    pass: "",
   });
   const handleSubmitForm = (event) => {
     //event preventdefault es necesario para no recargar la pagina al enviar el formulario
@@ -17,7 +17,9 @@ function Login() {
     console.log( "datos desde el componente login :" + JSON.stringify(data));
     fetch("http://localhost:4000/userData", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json"
+     },
       body: JSON.stringify(data),
     })
       .then((response) => response.json())
@@ -26,10 +28,12 @@ function Login() {
         //esto deberia ser lo correcto , que el backend nos responda con los datos validados del usuario 
         // UpdateValue(data);
         //la data es la respuesta del servidor
+        console.log("respuesta del servidor es , se ve en componente loguin  : " + JSON.stringify(data));
+        console.log("respuesta del servidor mensaje  :");
         if(data.status === "1"){
-            
+          console.log( "valor desde el componente login de las cookies es : " + data.key);
+          FillCookies(data.key);
           UpdateValue(data);
-          console.log("datos desde el contexto : " + data.status)
           conectSocket();
           navegate('/ControllerPage');
         }else{
@@ -50,7 +54,7 @@ function Login() {
   return (
     <>
       <div className="h-screen w-screen bg-slate-100 flex justify-center items-center">
-        <div className="w-2/6 h-auto bg-slate-200 p-8 rounded-2xl ">
+        <div className="w-2/6 h-auto bg-slate-200 p-8 rounded-2xl shadow-md shadow-slate-500 ">
           <div className="flex justify-center">
             <h1 className="text-4xl font-bold py-6 ">Ingresa a tu cuenta</h1>
           </div>
