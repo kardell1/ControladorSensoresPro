@@ -4,7 +4,6 @@
  * definir las conexiones 
  */
 import express from "express";
-import http from "http";
 import cors from "cors";
 import {ServerPort} from "./Config/Conexion.js";
 import {router} from "./authRoutes.js";
@@ -15,6 +14,9 @@ import { client } from "./Services/mqttConfig.js";
 import {Server as SocketServer} from "socket.io";
 import { DataPoints } from "./Models/DataPoints.js";
 import { authenticateMiddleware } from "./Middleware/authMiddleware.js";
+// import http from "http";
+import http from "http";
+
 const app = express();
 //cors debe declararse desde el inicio y la libreria se instala
  app.use(cors({
@@ -154,6 +156,7 @@ client.on('message' , MensajeMqtt);
 //-----------------------------------------------------
 /**primero declaramos el middleware para que registre todoso los tipos de entrada */
 app.use(authenticateMiddleware);
+
 app.use(router);
 /**el app.use(router) explicacion: router contiene las rutas que vamos a usar en l proyecto , entonces definimos ahi la logica de cada ruta que tengamos () */
 //------------------------------------------------------

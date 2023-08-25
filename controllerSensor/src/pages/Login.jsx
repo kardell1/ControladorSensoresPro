@@ -1,42 +1,93 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDataContext } from "../context/ContextUser";
 import { conectSocket } from "../components/CompConexionSocket";
-import { FillCookies } from "../context/ContextCookies";
+import { FillCookies, Key } from "../context/ContextCookies";
 function Login() {
+  //-----------------------------------------------------
   //para usar el contexto primero debemos declararlo y asi podremos acceder a sus funciones
-  const { UpdateValue } = useDataContext();
+  const prueba = Key();
+  /**el tipo de dato es undefined */
+  console.log("el valor del cookies es : " + prueba);
+  console.log("tipo de dato : " + typeof prueba);
+  //---------------------------------------------------
   const navegate = useNavigate();
+  const { UpdateValue } = useDataContext();
   const [data, setData] = useState({
     name: "",
     pass: "",
   });
+  
+  /**un fetch para que cargue y pida los datos en el get*/
+  useEffect(()=>{
+    console.log("el cookies no es nullo");
+    fetch("http://localhost:4000/recoverData", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": `${prueba}`,
+      },
+    })
+    /**en el encabezado estoy enviando el key */
+    .then((response) => response.json())
+    .then((data) => {
+      /**aca nos devuelve la informacion
+       *
+      */
+    console.log("en el componente loguin datos de respuesta son : ");
+    console.log(JSON.stringify(data));
+    console.log("---------------------------------------");
+     
+     
+     
+     console.log(data.messaje);
+     if (data.status === "1") {
+       console.log(
+         "valor desde el componente login de las cookies es : " + data.key
+         );
+         UpdateValue(data);
+         conectSocket();
+         navegate("/ControllerPage");
+        } else {
+          console.log("datos de logueo erroneos");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    
+  },[]);
   const handleSubmitForm = (event) => {
     //event preventdefault es necesario para no recargar la pagina al enviar el formulario
     event.preventDefault();
-    console.log( "datos desde el componente login :" + JSON.stringify(data));
+    console.log("datos desde el componente login :" + JSON.stringify(data));
     fetch("http://localhost:4000/userData", {
       method: "POST",
-      headers: { 
-        "Content-Type": "application/json"
-     },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(data),
     })
       .then((response) => response.json())
       //el response es como tratamos la respuesta y la volvemos a json
       .then((data) => {
-        //esto deberia ser lo correcto , que el backend nos responda con los datos validados del usuario 
+        //esto deberia ser lo correcto , que el backend nos responda con los datos validados del usuario
         // UpdateValue(data);
         //la data es la respuesta del servidor
-        console.log("respuesta del servidor es , se ve en componente loguin  : " + JSON.stringify(data));
+        console.log(
+          "respuesta del servidor es , se ve en componente loguin  : " +
+            JSON.stringify(data)
+        );
         console.log("respuesta del servidor mensaje  :");
-        if(data.status === "1"){
-          console.log( "valor desde el componente login de las cookies es : " + data.key);
+        if (data.status === "1") {
+          console.log(
+            "valor desde el componente login de las cookies es : " + data.key
+          );
           FillCookies(data.key);
           UpdateValue(data);
           conectSocket();
-          navegate('/ControllerPage');
-        }else{
+          navegate("/ControllerPage");
+        } else {
           console.log("datos de logueo erroneos");
         }
       })
@@ -49,7 +100,6 @@ function Login() {
     console.log("boton crear usuario presionado");
     navegate("/CreateUser");
   };
-  
 
   return (
     <>
@@ -96,7 +146,6 @@ function Login() {
               </button>
             </div>
           </div>
-          
         </div>
       </div>
     </>

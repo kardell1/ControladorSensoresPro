@@ -68,3 +68,12 @@ userController.post("/createUser", async (req, res) => {
     res.json({ messaje: "no se creo el usuario" });
   }
 });
+
+userController.get("/recoverData" , async (req ,res)=>{
+  /**verificar si la llave es correcta */
+  console.log("recuperando la llave desde el encabezado en el controllador");
+  console.log("tipo de dato recibido en el controllador:" + typeof(req.headers.authorization));
+  console.log(" en el controllador el dato recuperado es : " + req.headers.authorization);
+  res.json({status : "1" , key : req.headers.authorization , messaje:"dato recibido" , usuario:{username:"respuesta"} });
+
+})

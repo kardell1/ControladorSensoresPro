@@ -4,6 +4,7 @@ import ButtonControllConfig from "./CompButton";
 import {BsRobot ,BsPerson ,BsReplyFill} from "react-icons/bs";
 import {FiSlack , FiWind} from "react-icons/fi";
 import { desconectSocket } from "./CompConexionSocket";
+import { ClearCookies } from "../context/ContextCookies";
 function MenuUser() {
   const navegate = useNavigate();
   /**para usar el contexto primero debemos acceder a su valor y lo hacemos declarando el hook personalizado */
@@ -13,6 +14,7 @@ function MenuUser() {
   const handleCloseSession=()=>{
     console.log("presionado boton de cerrar sesion");
     desconectSocket();
+    ClearCookies();
     navegate("/");
   }
   return (
