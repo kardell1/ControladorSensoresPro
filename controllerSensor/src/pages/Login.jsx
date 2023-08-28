@@ -38,7 +38,7 @@ function Login() {
         console.log("entrando x verdad en el get");
           /* la respuesta del servidor es {data : {objeto}} por eso se entra dentro de data */        
           UpdateValue(data.data);
-          // conectSocket();
+          conectSocket();
           navegate("/ControllerPage");
          } else {
            console.log("datos de logueo erroneos");
@@ -77,7 +77,7 @@ function Login() {
           console.log("datos que se suben al context, desde comp login")
           console.log(JSON.stringify(data.data));
           console.log("-------------------------------------------")
-          // conectSocket();
+          conectSocket();
           navegate("/ControllerPage");
         } else {
           console.log("datos de logueo erroneos");

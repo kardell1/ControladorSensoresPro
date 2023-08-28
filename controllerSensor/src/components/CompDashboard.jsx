@@ -19,10 +19,10 @@ function DashboardUser() {
         </div>
         <div className="absolute top-24 flex w-full justify-center" >
             <div className="flex w-4/5 justify-around " >
-                {/* <SensorTemp/>
+                <SensorTemp/>
                 <SensorHumedad/>
                 <SensorHumedadSuelo/>
-                <SensorTemp/> */}
+               
             </div>
             
         </div>
