@@ -20,12 +20,13 @@ userController.post("/userData", async (req, res) => {
      */
     try {
       /**se usa el try para ver algun posible error al momento de devolver los datos */
-      const tokken = await CreateTokken({ datos :UsuarioEncontrado });
+      const tokken = await CreateTokken({ data :{usuario:UsuarioEncontrado , status:"1"} });
       console.log("Token obtenido:", tokken);
     
       res.json({
-        usuario: UsuarioEncontrado,
-        status: "1",
+        data : {
+          usuario: UsuarioEncontrado,
+          status: "1"} ,
         key: tokken,
       });
     } catch (error) {
@@ -71,9 +72,6 @@ userController.post("/createUser", async (req, res) => {
 
 userController.get("/recoverData" , async (req ,res)=>{
   /**verificar si la llave es correcta */
-  console.log("recuperando la llave desde el encabezado en el controllador");
-  console.log("tipo de dato recibido en el controllador:" + typeof(req.headers.authorization));
-  console.log(" en el controllador el dato recuperado es : " + req.headers.authorization);
-  res.json({status : "1" , key : req.headers.authorization , messaje:"dato recibido" , usuario:{username:"respuesta"} });
-
+  res.json({data:"el dato esta siendo redirigido el get del controllador......."});
+  /* parece que nunca llega a esta ruta porque el controllador verifica si existe el tokken, si existe decodifica el tokken y devuelve el usuario logueado */
 })

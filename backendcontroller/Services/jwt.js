@@ -26,16 +26,19 @@ export const CreateTokken =async(payload)=>{
             console.log("Token creado correctamente:", token);
             resolve(token);
           }
-        });
+        });          
       });
 }
 
-// export function DecodedTokken(token , key){
-//     try{
-//         const decode =jwt.verify(token , key)
-//         console.log(JSON.stringify(decode));
-//         return decode;
-//     }catch(err){
-//         return null;
-//     }
-// }
+export function DecodedTokken(token , key){
+    try{
+        const decode =Jwt.verify(token , key)
+        console.log("---------------------------------------");
+        console.log("usando funcion de decodificar tokken");
+        console.log(JSON.stringify(decode));
+        console.log("---------------------------------------");
+        return decode;
+    }catch(err){
+        return null;
+    }
+}
