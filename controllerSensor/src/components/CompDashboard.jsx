@@ -11,7 +11,7 @@ function DashboardUser() {
   return (
     <>
       <div className="h-screen relative shadow-md shadow-slate-400 ">
-        <div className="h-2/5 bg-emerald-600">
+        <div className="h-2/5 bg-emerald-700">
           <p className="p-2 text-white font-semibold text-lg">Dashboard</p>
         </div>
         <div className="h-3/5 bg-slate-200">
