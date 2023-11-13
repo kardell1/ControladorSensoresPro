@@ -8,7 +8,7 @@ export async function CreateSensors(){
          * a la hora de entregar el programa puedo que no sea nada recomendable tener esa opcion
          * 
          */
-        const Elementos = ["Temperatura" , "Humedad" , "Humedad_suelo"];
+        const Elementos = ["Temperatura" , "Humedad" , "Humedad_suelo","Impureza","Caudalimetro","Lluvia","Luz"];
         const elementosExistentes = await Sensor.findAll({
             where: {
                 name_sensor: {
@@ -26,7 +26,11 @@ export async function CreateSensors(){
             const initialSensors = [
                 { name_sensor: "Temperatura", description: "sensor de temperatura, add descripcion" },
                 { name_sensor: "Humedad", description: "sensor de humedad, add descripcion" },
-                { name_sensor: "Humedad_suelo", description: "sensor de humedad suelo, add descripcion" }
+                { name_sensor: "Humedad_suelo", description: "sensor de humedad suelo, add descripcion" },
+                { name_sensor: "Impureza", description: "sensor de contaminacion del agua, add descripcion" },
+                { name_sensor: "Caudalimetro", description: "sensor que mide la cantidad de litros de agua, add descripcion" },
+                { name_sensor: "Lluvia", description: "sensor detector de lluvia, add descripcion" },
+                { name_sensor: "Luz", description: "sensor detector de luz, add descripcion" }
             ];
             /**luego creamos los sensores con el bulkCreate */
             const createdSensors = await Sensor.bulkCreate(initialSensors);
