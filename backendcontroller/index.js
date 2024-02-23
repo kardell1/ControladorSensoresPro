@@ -14,11 +14,8 @@ import { client } from "./Services/mqttConfig.js";
 import { Server as SocketServer } from "socket.io";
 import { DataPoints } from "./Models/DataPoints.js";
 import { authenticateMiddleware } from "./Middleware/authMiddleware.js";
-// import http from "http";
 import http from "http";
-
 const app = express();
-//cors debe declararse desde el inicio y la libreria se instala
 app.use(
   cors({
     // origin: "http://localhost:5173",
@@ -30,7 +27,6 @@ app.use(
 //-----------------------------------------------------
 app.use(express.static('dist'))
 const serve = http.createServer(app);
-//el backend va entender text y json , si se necesitara otro tipo de mensaje tambien debe especificarse
 app.use(express.text());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -45,11 +41,7 @@ const io = new SocketServer(serve, {
   try {
     await sequelize.authenticate();
     console.log("Conexión a la base de datos establecida correctamente.");
-    //aqui podriamos poner algun tipo de logica luego de conectarnos a la base de datos
     try {
-      /**si ya tenemos la tabla en la base de datos seguira ejecutando el console.log
-       * no se realizara ningun cambio en la base de datos si ya existe la tabla que queremos crear
-       */
       await User.sync({ alter: true });
       console.log("modelo User sincronizado con la base de datos");
     } catch (syncError) {
@@ -136,20 +128,13 @@ const io = new SocketServer(serve, {
     console.error("Error al conectar a la base de datos:", error);
   }
 })();
-//los parentesis al final de la funcion significa que se ejecutara inmediatamente
 io.on("connection", (socket) => {
-  console.log("usuario conectado del fronted : " + socket.id);
-  // con el id vemos las ventanas y us respectivos id
-
   socket.on("onoff", (message) => {
     client.publish("esp32/actuadores", message);
-    console.log(message);
   });
 });
-//-----------------------------------------------------
-//funcion para recibir el mensaje desde mqtt
 async function MensajeMqtt(topic, message) {
-  //--------------------------------------------------------------
+  //-----------------------------------------------------
   if (topic === "esp32/ResTemperatura" && message != null) {
     console.log(
       "mensaje del topico : esp32/ResTemperatura ___ mensaje :" + message
@@ -252,17 +237,8 @@ async function MensajeMqtt(topic, message) {
     console.log("topico no encontrado");
   }
 }
-
-//dentro va una funcion que recibira un mensaje
 client.on("message", MensajeMqtt);
-//-----------------------------------------------------
-/**primero declaramos el middleware para que registre todoso los tipos de entrada */
 app.use(authenticateMiddleware);
-
 app.use(router);
-/**el app.use(router) explicacion: router contiene las rutas que vamos a usar en l proyecto , entonces definimos ahi la logica de cada ruta que tengamos () */
-//------------------------------------------------------
-//significa desde que puerto va tomar los datos
 serve.listen(ServerPort);
 console.log("servidor montado en el puerto : " + ServerPort);
-//---------------------------------------------

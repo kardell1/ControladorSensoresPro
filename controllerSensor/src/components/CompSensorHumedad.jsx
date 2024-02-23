@@ -1,18 +1,13 @@
 import { useEffect, useState } from "react";
 import { getSocket } from "./CompConexionSocket";
 import { WiHumidity } from "react-icons/wi";
-/**cambiar esto a get socket */
-
-/**al conectarnos signifca que ya estamos escuchando el socket */
 function SensorHumedad() {
   const socket = getSocket();
-  // const [list, setList] = useState([]);
   const [data, setData] = useState("0");
 
   useEffect(() => {
     const messageRecibed = (message) => {
       setData(message);
-      // setList((prevLista) => [...prevLista, message]);
     };
     socket.on("esp32/ResHumedad", messageRecibed);
     return () => {

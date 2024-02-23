@@ -1,17 +1,13 @@
 import { useEffect, useState } from "react";
 import { getSocket } from "./CompConexionSocket";
 import { GiStoneSphere } from "react-icons/gi";
-
-/**al conectarnos signifca que ya estamos escuchando el socket */
 function SensorHumedadSuelo() {
   const socket = getSocket();
-  // const [list, setList] = useState([]);
   const [data, setData] = useState("0");
 
   useEffect(() => {
     const messageRecibed = (message) => {
       setData(message);
-      // setList((prevLista) => [...prevLista, message]);
     };
     socket.on("esp32/ResHumedadSuelo", messageRecibed);
     return () => {

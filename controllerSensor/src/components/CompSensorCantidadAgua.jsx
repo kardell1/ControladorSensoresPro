@@ -2,17 +2,13 @@ import { useEffect, useState } from "react";
 import { getSocket } from "./CompConexionSocket";
 import { BsMoisture } from "react-icons/bs";
 
-
-/**al conectarnos signifca que ya estamos escuchando el socket */
 function SensorCantAgua() {
   const socket = getSocket();
-  // const [list, setList] = useState([]);
   const [data, setData] = useState("0");
 
   useEffect(() => {
     const messageRecibed = (message) => {
       setData(message);
-      // setList((prevLista) => [...prevLista, message]);
     };
     socket.on("esp32/ResCantidadAgua", messageRecibed);
     return () => {

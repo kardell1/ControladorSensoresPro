@@ -2,15 +2,12 @@ import { useEffect, useState } from "react";
 import { getSocket } from "./CompConexionSocket";
 import { BsThermometerHigh } from "react-icons/bs";
 
-/**al conectarnos signifca que ya estamos escuchando el socket */
 function SensorTemp() {
   const socket = getSocket();
-  // const [list, setList] = useState([]);
   const [data, setData] = useState("0");
 
   useEffect(() => {
     const messageRecibed = (message) => {
-      // setList((prevLista) => [...prevLista, message]);
       setData(message);
     };
     socket.on("esp32/ResTemperatura", messageRecibed);

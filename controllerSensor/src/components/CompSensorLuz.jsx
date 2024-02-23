@@ -5,24 +5,17 @@ import { BsSunFill } from "react-icons/bs";
 import SensorDeLluvia from "./CompSensorLluvia";
 import { MdCloudySnowing } from "react-icons/md";
 import { WiDayCloudyGusts } from "react-icons/wi";
-/**al conectarnos signifca que ya estamos escuchando el socket */
 function SensorDeLuz() {
   const socket = getSocket();
-  // const [list, setList] = useState([]);
   const [rain, setRain] = useState(false);
   const [data, setData] = useState(false);
-  // const [climate , setClimate] = useState("nublado");
   useEffect(() => {
     const messageRecibed = (message) => {
       if (message == "0") {
-        // setClimate("nublado");
         setData(false);
       } else {
-        // setClimate("despejado");
         setData(true);
       }
-
-      // setList((prevLista) => [...prevLista, message]);
     };
     socket.on("esp32/ResLuz", messageRecibed);
     return () => {
