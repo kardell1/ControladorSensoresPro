@@ -5,12 +5,12 @@ import { BsThermometerHigh } from "react-icons/bs";
 /**al conectarnos signifca que ya estamos escuchando el socket */
 function SensorTemp() {
   const socket = getSocket();
-  const [list, setList] = useState([]);
-  const [data, setData] = useState("");
+  // const [list, setList] = useState([]);
+  const [data, setData] = useState("0");
 
   useEffect(() => {
     const messageRecibed = (message) => {
-      setList((prevLista) => [...prevLista, message]);
+      // setList((prevLista) => [...prevLista, message]);
       setData(message);
     };
     socket.on("esp32/ResTemperatura", messageRecibed);
@@ -21,50 +21,30 @@ function SensorTemp() {
 
   return (
     <>
-      <div>
-        <div className="bg-slate-100 flex rounded-md p-3 text-xl font-semibold shadow-slate-600 shadow-lg ">
-          <div className="px-3">
-            <h1 className=" text-slate-400">Temperatura </h1>
-            <p> {data} </p>
+    <div className="flex  gap-2 h-max">
+      <div className="bg-slate-100 text-slate-400 flex flex-col rounded-md w-full text-xl font-semibold p-4 gap-3  shadow-md shadow-slate-400/30 ">
+        <h1>Temperatura</h1>
+        <div className="flex items-center gap-3">
+          <div className="flex bg-sky-700 rounded-full p-2  items-center text-4xl text-white shadow-slate-500 shadow-sm w-fit ">
+            <BsThermometerHigh  />
           </div>
-          <div className="flex bg-orange-500 rounded-full p-2  items-center text-4xl text-white shadow-slate-500 shadow-sm">
-            <BsThermometerHigh />
-          </div>
+          <p className="font-extrabold text-5xl text-slate-600">
+            {data}<span className="font-medium">°C</span>{" "}
+          </p>
         </div>
-        <div className="mt-9 bg-slate-100 rounded-lg p-3  shadow-slate-600 shadow-lg font-semibold ">
-          <ul>
-            {list.length > 10 ? (
-              //si la list es mayor a 10 entonces quitamos un elemento a la list y copiamos la list a setLista() , asi cuando la copiemos esta list sera 9 y pasara por falso
-              <>{setList(list.slice(1))}</>
-            ) : (
-              //si el tamaño de la list no es mayor a 10(por falso)
-              <>
-                {list.map((lista, index) => {
-                  //esto es para pintar el borde el ultimo elemento
-                  if (index == list.length - 1) {
-                    return (
-                      <li
-                        key={index}
-                        className="bg-emerald-400 flex justify-center"
-                      >
-                        {lista}
-                      </li>
-                    );
-                  } else {
-                    return (
-                      <li key={index} className="flex justify-center py-2">
-                        {lista}
-                      </li>
-                    );
-                  }
-                  // para el mapeo de la list se necesita declarar el return para devolver algo en la funcion
-                })}
-              </>
-            )}
-          </ul>
+        <p>Estado :</p>
+        <div className="progress-bar-container ">
+          <div className="progress-bar rounded-lg ">
+            <div
+              className="progress-bar-fill rounded-lg "
+              style={{ width: `${data}%` }}    
+            ></div>
+          </div>
+          <div className="progress-label">{`${data}°`}</div>
         </div>
       </div>
-    </>
+    </div>
+  </>
   );
 }
 export default SensorTemp;

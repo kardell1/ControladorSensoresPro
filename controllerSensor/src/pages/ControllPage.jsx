@@ -12,14 +12,8 @@ function ControllerPage() {
   return (
     <>
       {value.status === "1" ? (
-        <div className="flex">
-          {" "}
-          <div className="w-2/12">
-            <MenuUser />
-          </div>{" "}
-          <div className="w-10/12">
-            <DashboardUser />
-          </div>{" "}
+        <div >
+          <MenuUser />
         </div>
       ) : (
         <ErrorPage />

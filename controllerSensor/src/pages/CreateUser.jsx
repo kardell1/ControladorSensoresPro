@@ -34,7 +34,7 @@ function CreateUser() {
   };
   return (
     <>
-      <div className="h-screen w-screen bg-slate-100 flex justify-center items-center">
+      <div className="h-screen w-screen bg-slate-100 flex justify-center items-center fondo">
         <div className="w-2/6 h-auto bg-slate-200 p-8 rounded-2xl ">
           <div className="flex justify-center">
             <h1 className="text-4xl font-bold py-6 ">Crear Usuario</h1>

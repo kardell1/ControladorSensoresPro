@@ -5,10 +5,48 @@ una vez instalado estas dependencias de Desarrollo es necesario mostrar los fich
 -------------fichero de configuracion : npx tailwindcss init -p-------------
 este comando de instalacion hace que se configure el tailwind con el postcss 
 */
-.prueba{
+.pru{
     border: solid;
-    background-color: rgb(17 24 39)
+    border-color: aqua;
+}
+.prue{
+    border: solid;
+    border-color: red;
+}
+.fondo{
+    background: url(../images/fondoLogin.jpg);
+    background-size: 100% 100%;
 }
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.progress-bar-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: rgb(194, 191, 191);
+    position: relative;
+  }
+  
+  .progress-bar-fill {
+    height: 100%;
+    background-color: #118aca;
+    transition: width 0.8s ease-in-out;
+  }
+  
+  .progress-label {
+    margin-left: 10px;
+    font-size: 14px;
+    color: black;
+  }
+  
+  .clima-icon{
+    font-size: 140px;
+  }
+  

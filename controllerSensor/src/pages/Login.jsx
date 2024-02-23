@@ -55,7 +55,7 @@ function Login() {
     //event preventdefault es necesario para no recargar la pagina al enviar el formulario
     event.preventDefault();
     console.log("datos desde el componente login :" + JSON.stringify(data));
-    await fetch("http://localhost:4000/userData", {
+    await fetch("/userData", {
       method: "POST",
       headers: { 
       //---------------------------------------------------
@@ -71,10 +71,10 @@ function Login() {
         );
         console.log("respuesta del servidor mensaje  :");
         if (data.data.status === "1") {
-          console.log(
-            "valor desde el componente login de las cookies es : " + data.key
-          );
-          FillCookies(data.key);
+          // console.log(
+          //   "valor desde el componente login de las cookies es : " + data.key
+          // );
+          // FillCookies(data.key);
           UpdateValue(data.data);
           console.log("datos que se suben al context, desde comp login")
           console.log(JSON.stringify(data.data));
@@ -97,8 +97,8 @@ function Login() {
 
   return (
     <>
-      <div className="h-screen w-screen bg-slate-100 flex justify-center items-center">
-        <div className="w-2/6 h-auto bg-slate-200 p-8 rounded-2xl shadow-md shadow-slate-500 ">
+      <div className="h-screen w-screen bg-slate-100 flex justify-center items-center fondo">
+        <div className="w-2/6 h-auto bg-slate-200/30 p-8 rounded-2xl shadow-md shadow-slate-300 max-md:w-auto">
           <div className="flex justify-center">
             <h1 className="text-4xl font-bold py-6 ">Ingresa a tu cuenta</h1>
           </div>
@@ -127,18 +127,7 @@ function Login() {
                 ingresar
               </button>
             </form>
-            <div className="flex justify-center ">
-              <p className="text-xl w-auto text-slate-500 ">
-                no tienes cuenta?
-              </p>
-              <button
-                className="px-2 text-xl text-cyan-600 font-semibold hover:text-cyan-400"
-                onClick={handleCreateUser}
-              >
-                {" "}
-                registrate
-              </button>
-            </div>
+            
           </div>
         </div>
       </div>
